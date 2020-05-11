@@ -1,0 +1,12 @@
+.CD "m4 \(en macro processor"
+.SX "m4\fR [\fB\(enD \fIname\fR = \fIvalue\fR]\fR [\fB\(enU \fIname\fR] 
+.FL "\(enD" "Define a symbol"
+.FL "\(enU" "Undefine a symbol"
+.EY "m4 <m4test" "Run M4"
+.PP
+\fIM4\fR is a general-purpose macro processor.
+It is described in Chap. 9.
+It has been used to implement programming languages, such as RATFOR.
+
+
+

@@ -1,0 +1,14 @@
+.CD "indent \(en reformat the layout of a program"
+.SX "indent \fIin_file\fR [\fIout_file\fR] [\fIoptions\fR]
+.FL "\fR(many)"
+.EX "indent \(enbr \(enc25 prog.c " "Indent \fIprog.c\fR
+.EX "indent \(ennpcs prog.c newprog.c" "Put output on \fInewprog.c"
+.PP
+\fIIndent\fR reformats a C program according to a set of options provided.
+Most of the common choices are available.
+The output file replaces the input file, unless an explicit output file
+is specified (but a backup is made of the original with suffix \fI.BAK\fR).
+The options are given in Chap. 9.
+
+
+

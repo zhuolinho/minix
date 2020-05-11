@@ -1,0 +1,77 @@
+.TH TTYS 5
+.SH NAME
+ttys \- list of terminals handled by init
+.SH SYNOPSIS
+.B /etc/ttys
+.SH DESCRIPTION
+.de SP
+.if t .sp 0.4
+.if n .sp
+..
+The ttys file contains a list of terminal names and associated flags.  It is
+a simple text file with lines of the form:
+.PP
+.RS
+.I afn
+.RE
+.PP
+Where
+.I a
+and
+.I f
+are single characters, and
+.I n
+is a single character or the name of a file in
+.BR /dev .
+More precisely:
+.PP
+.TP
+.I a
+One of: 0 (line disabled = no login), 1 (enable = login possible), 2
+(enable, login possible through
+.BR getty .)
+There is not much difference between keys 1 and 2, the getty program just
+displays a system login banner, reads a user name, and calls login.
+.TP
+.I f
+Defines the line parameters: baud rate, bits, and parity.  You can use the
+following flags:
+.nf
+.ta 5 9 16 23 31
+.SP
+	\fIf\fR	baud	bits	parity
+.SP
+	0	-	-	-	console
+.SP
+	a	110	8	none
+	b	300	8	none
+	c	1200	8	none
+	d	2400	8	none
+	e	4800	8	none
+	f	9600	8	none
+.SP
+	g	110	7	even
+	h	300	7	even
+	i	1200	7	even
+	j	2400	7	even
+	k	4800	7	even
+	l	9600	7	even
+.SP
+	m	110	7	odd
+	n	300	7	odd
+	o	1200	7	odd
+	p	2400	7	odd
+	q	4800	7	odd
+	r	9600	7	odd
+.SP
+.DT
+.fi
+.TP
+.I n
+This is either a single digit for the terminal lines /dev/tty\fIn\fR, or the
+full name of a terminal device if more than one character: /dev/\fIn\fR.
+.SH "SEE ALSO"
+.BR ttytype (5),
+.BR init (8).
+.SH AUTHOR
+Kees J. Bot (kjb@cs.vu.nl)

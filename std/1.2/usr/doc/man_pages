@@ -1,0 +1,198 @@
+This file contains the man pages for those programs not listed in the book.
+In the PC version of the distribution, they are in /user/bin.  In the AT
+version they are in /usr/bin.
+---------------------------------------------------------------------------
+
+
+Command:	cal - print a calendar
+Syntax:		cal [month] year
+Flags:		(none)
+Example:	cal 3 1987		# print March 1987
+
+     Cal prints a calendar for a month or year.  The year can be between 1
+and 9999.  Note that the year 87 is not a synonym for 1987, but is itself a
+valid year about 19 centuries ago.  The calendar produced is the one used
+by England and her colonies.  Try Sept. 1752, Feb 1900, and Feb 2000.  If
+you don't understand what is going on, look up "Calendar, Gregorian" in a
+good encyclopedia.
+
+
+Command:	cpdir - copy a directory and its subdirectories
+Syntax:		cpdir [-v] srcdir destdir
+Flags:		-v Verbose; cpdir tells what it is doing
+Example:	cpdir dir1 dir2	# creat dir2 and copy dir1's files into it
+
+     Cpdir creates the target directory, goes into it, and copies all the
+files in the source directory to it.  When it is done, the target directory
+contains the same files as the source directory.  Subdirectories are copied
+Recursively. Links and special files are ignored.
+
+
+Command:	diff - print differences between two files
+Syntax:		diff file1 file2
+Flags:		(none)
+Example:	diff file1 file2	# print differences between 2 files
+
+     Diff compares two files and generates a list of lines telling how
+the two files differ.  Lines may not be longer than 128 characters.
+
+
+Command:	du - print disk usage
+Syntax:		du [-s] dir
+Flags:		-s Summary only
+Example:	du dir			# list disk space used by files in dir
+
+     Du examines a directory and prints the amount of space occupied by the
+files in that directory and its subdirectories.
+
+
+Command:	expr - evaluate experession
+Syntax:		expr arg ...
+Flags:		(none)
+Example:	x=`expr $x+1`		# add 1 to shell variable x
+
+     Expr computes the value of its argument and writes the result on
+standard output.  The valid operators, in order of increasing precedence,
+are listed below.  Operators grouped by {...} have the same precedence.
+Operators: |, &, {<, <=, ==, !=, >=, >}, {+, -}, *.
+     Note that the V7 ":" operator is missing.  Parentheses are permitted.
+Command:	find - find files meeting a given condition
+Syntax:		find directory expression
+Flags:		(none)
+Examples:	find /  -name a.out -print	# print all a.out paths
+		find /usr/ast ! -newer f -ok rm {} \;	# ask before removing
+		find /usr -size +20 -exec mv {} /big \; # move files > 20 blks
+		find / \( -name a.out -o -name `*.o` \) -exec rm {}\;
+
+     Find descends the file tree starting at the given directory checking
+each file in that directory and its subdirectories against a predicate.
+If the predicate is true, an action is taken.  The predicates may be
+connected by -a (Boolean and), -o (Boolean or) and ! (Boolean negation).
+Each predicate is true under the conditions specified below.  The integer n
+may also be +n to mean any value greater than n, -n to mean any value less than
+n, or just n for exactly n.
+  -name s	true if current filename is s (include shell wild cards)
+  -size n	true if file size is n blocks
+  -inum n	true if the current file's i-node number is n
+  -mtime n	true if modification time relative to today (in days) is n
+  -links n	true if the number of links to the file is n
+  -newer f	true if the file is newer than f
+  -perm n	true if the file's permission bits = n (n is in octal)
+  -user u	true if the uid = u (a numerical value, not a login name)
+  -grogp g	true if the gid = g (a numerical value, not a group name)
+  -type x	where x is bcdfug (block, char, dir, regular, setuid, setgid)
+
+Following the expression can be one of the following, telling what to do
+when a file is found:
+  -print	print the file name on standard output
+  -exec		execute a MINIX command, {} stands for the file name
+  -ok		prompts before executing the command
+
+
+Command:	more - pager
+Syntax:		more file ...
+Flags:		(none)
+Example:	more file		# display file on the screen
+
+     More is an alternative to mined as a pager, for people used to the
+4.x BSD pager.  This version only implements three commands:
+   <space>  - display next page
+   <return> - display next line
+   q        - exit more
+
+
+Command:	fdisk - partition a hard disk
+Syntax:		fdisk file
+Flags:		(none)
+Example:	fdisk /dev/hd1
+
+     When fdisk starts up, it reads in the partition table and displays it.
+It then presents a menu to allow the user to modify partitions, store the
+partition table on a file, or load it from a file.  Partitions can be marked
+as DOS or non-DOS, and active or not.  MINIX doesn't care what kind of a
+partition it uses.  Using fdisk is self-explanatory.  However, be aware that
+repartitioning a disk may cause information on it to be lost.
+
+
+Command:	fix - generate new file from old one and diff listing
+Syntax:		fix oldfile difflist >newfile
+Flags:		(none)
+Example:	fix old difflist >new	# generate new from old and diffs
+
+     Fix accepts a diff listing produced by diff and reconstructs the
+new file.  It is common for people to take a file, modify it, and then
+send the diff listing between the old and new files to other people.
+Using fix, the old file, and the diff listing, it is possible to creat
+the new file.  For example:
+
+  diff oldfile newfile >difflist
+  fix oldfile difflist >new2
+
+will generate a file new2 that is identical to newfile.
+
+
+Command:	printenv - print out the current environment
+Syntax:		printenv
+Flags:		(none)
+Example:	printenv		# print the environment
+
+     Printenv prints out the current environment strings, one per line.
+
+
+Command:	readfs - read a MINIX file system
+Syntax:		readfs [-il] block_special [dir]
+Flags:		-i Give information about the file, but do not extract files
+		-l List the files extracted on standard output
+Example:	readfs -l /dev/fd0
+
+     Readfs reads a floppy disk containing a MINIX file system.  It can
+extract all the files from it, give a listing of them, or both.  The files
+extracted can be put in a user-specified directory (default: current
+directory).  If subdirectories are needed, they will be created automatically.
+
+
+Command:	test - test for a condition
+Syntax:		test expr
+Flags:		(none)
+Example:	test -r file		# see if file is readable
+
+     Test checks to see if files exist, are readable, etc. and returns
+an exit status of zero if true and nonzero if false.  The legal operators are
+  -r file  true if the file is readable
+  -w file  true if the file is writable
+  -f file  true if the file is not a directory
+  -d file  true if the file is a directory
+  -s file  true if the file exists and has a size > 0
+  -t fd    true if file descriptor fd (default 1) is a terminal
+  -z s     true if the string s has zero length
+  -n s     true if the string s has nonzero length
+  s1 = s2  true if the strings s1 and s2 are identical
+  s1 != s2 true if the strings s1 and s2 are different
+  m -eq m  true if the integers m and n are numerically equal
+                The operators -gt, -ge, -ne, -le, -lt may be used as well
+
+These operands may be combined with -a (Boolean and), -o (Boolean or), !
+(negation).  The priority of -a is higher than that of -o.  Parentheses are 
+permitted, but must be escaped to keep the shell from trying to interpret them.
+
+
+Command:	uuencode - encode a binary file to ASCII for mailing
+Syntax:		uuencode [input] output
+Flags:		(none)
+Example:	uuencode infile <infile >outfile	# encode infile
+
+     Uuencode takes an input file, typically a binary file, and converts it
+to pure ASCII by encoding 3 bytes (24 bits) as 4 bytes in ASCII.  Only 64
+different characters are used, all of them valid ASCII characters.
+
+
+Command:	uudecode - decode a binary file encoded with uuencode
+Syntax:		uudecode file 
+Flags:		(none)
+Example:	uudecode encodedfile 	# re-create the original file
+
+     Uudecode takes an input file, typically a uuencoded binary file, and 
+converts it back to the original file.  The decoded file is given the name
+that the original file had.  The name information is part of the encoded file.
+
+

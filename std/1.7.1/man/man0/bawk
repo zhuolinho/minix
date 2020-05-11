@@ -1,0 +1,12 @@
+.CD "bawk, awk \(en pattern matching language"
+.SX "bawk \fIrules\fR [\fIfile\fR] ...
+.FL "\fR(none)"
+.EX "bawk rules input" "Process \fIinput\fR according to \fIrules\fR"
+.EX "bawk rules \(en  >out" "Input from terminal, output to \fIout\fR"
+.PP
+\fIAwk\fR is a pattern matching language.
+\fIBawk\fR is Basic Awk, a subset of the original.
+The file name \(en can be used to designate \fIstdin\fR.
+The manual is given in Chap. 9.
+
+

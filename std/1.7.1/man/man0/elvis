@@ -1,0 +1,19 @@
+.CD "elvis, vi, ex \(en clone of the Berkeley vi editor"
+.SX "elvis \fR[\fB\(enRerv\fR] [\fB\(ent \fItag\fR] \fR[\fIfile\fR] ..."
+.FL "\(enR" "Set the read-only option"
+.FL "\(ene" "Start up emulating \fIex\fR"
+.FL "\(enr" "Tell the user to use \fIelvrec\fR instead
+.FL "\(ent" "Start editing at the given tag"
+.FL "\(env" "Start up emulating \fIvi\fR"
+.EX "elvis" "Call the editor"
+.EX "elvis prog.c" "edit \fIprog.c\fR"
+.PP
+\fIElvis\fR is a screen editor patterned very closely after the Berkeley
+\fIvi\fR editor.  The \fIvi\fP and \fIex\fP programs are just links to
+\fIelvis\fP.  In its \fIex\fP form it is essentially a much improved version
+of \fIed\fP.
+It has many commands, described in Chap. 9.
+See also \fIctags\fR, \fIref\fR, \fIfmt\fR, and \fIelvrec\fR.
+
+
+

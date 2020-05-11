@@ -1,0 +1,16 @@
+.CD "gres \(en grep and substitute"
+.SX "gres\fR [\fB\(eng\fR] \fIpattern \fIstring\fR [\fIfile\fR] ..."
+.FL "\(eng" "Only change the first occurrence per line"
+.EX "gres bug insect" "Replace \fIbug\fP with \fIinsect\fP"
+.EX "gres \*(SQ^[A\(enZ]+$\*(SQ CAPS" "Replace capital-only lines with \fICAPS\fP"
+.PP
+.I Gres
+is a poor man's
+.I sed .
+It looks for the same patterns as
+.I grep ,
+and replaces each one by the given string.
+
+
+
+.SP 1.5

@@ -1,0 +1,21 @@
+.CD "mined \(en \*(M2 editor"
+.SX "mined\fR [\fIfile\fR]
+.FL "\fR(none)"
+.EX "mined /user/ast/book.3" "Edit an existing file"
+.EX "mined" "Call editor to create a new file"
+.EX "ls \(enl | mined" "Use \fImined\fR as a pager to inspect listing"
+.PP
+.I Mined
+(pronounced min-ed) is a simple full-screen editor.
+When editing a file, it holds the file in memory, thus speeding up
+editing, but limiting the editor to files of up to about 35K.
+Larger files must first be cut into pieces by
+.I split .
+Lines may be arbitrarily long.
+Output from a command may be piped into
+.I mined
+so it can be viewed without scrolling off the screen.
+See also Chap. 9.
+
+
+

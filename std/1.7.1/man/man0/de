@@ -1,0 +1,22 @@
+.CD "de \(en disk editor"
+.SX "de\fR [\fB\(enw\fR] \fIblock_device"
+.SX "de \(enr \fIfile
+.FL "\(enr" "Recover a file that has been removed"
+.FL "\(enw" "Enable writing, so device can be modified"
+.EX "de \(enr /usr/ast/prog.c" "Undo the effects of: \fIrm /usr/ast/prog.c\fR"
+.EX "de \(enw /dev/fd0" "Edit \fI/dev/fd0\fR for writing"
+.PP
+\fIDe\fR is a program for system administrators that allows disks to be
+inspected block by block.
+A variety of display options and commands are available, as described in
+Chap. 9.
+For a summary, start the program and type \fIh\fR for help.
+The program can also restore files that have just been removed by \fIrm\fR,
+provided that the i-node and blocks are still intact.
+Another feature is searching disks for ASCII strings, to help locate things
+after a crash.
+Finally, individual disk words can be changed, for example, the sizes of
+block special files.
+
+
+

@@ -1,0 +1,70 @@
+.CD "ps \(en process status"
+.SX "ps \fR[\fB\(enalxU\fR] [\fBkernel mm fs\fR]"
+.FL "\(ena" "Print all processes with controlling terminals"
+.FL "\(enl" "Give long listing"
+.FL "\(enx" "Include processes without a terminal"
+.FL "\(enU" "Update (optional) name database"
+.EX "ps \(enaxl" "Print all processes and tasks in long format"
+.EX "ps \(enU /kernel /fs /mm" "Update database with given namelists"
+.PP
+\fIPs\fR prints the status of active processes.  Normally only the caller's own
+processes are listed in short format (the PID, TTY, TIME and CMD fields as
+explained below).  The long listing contains:
+.HS
+.ta 0.5i 1.0i
+  F	Kernel flags:
+		001: free slot
+		002: no memory map
+		004: sending;
+		010: receiving
+		020: inform on pending signals
+		040: pending signals
+		100: being traced.
+.HS
+  S
+	State:
+		R: runnable
+		W: waiting (on a message)
+		S: sleeping (i.e.,suspended on MM or FS)
+		Z: zombie
+		T: stopped
+.HS
+  UID, PID, PPID, PGRP
+	The user, process, parent process and process group ID's.
+.HS
+  ADDR, SZ
+	Decimal address and size of the process in kilobytes.
+.HS
+  RECV
+	Process/task on which a receiving process is waiting or sleeping.
+.HS
+  TTY	
+	Controlling tty for the process.
+.HS
+  TIME
+	Process' cumulative (user + system) execution time.
+.HS
+  CMD	Command line arguments of the process.
+.HS
+.PP
+If extra arguments (the kernel, mm and fs nonstripped executables) are
+given, these are used to obtain the system addresses from (instead of the
+default system executables).  This applies to the \fB\(enU\fR option also.  
+This option creates \fI/etc/psdatabase\fR that contains system addresses and 
+terminal names, after which \fIps\fR is faster and doesn't need the system 
+executables anymore.
+.PP
+The default system executables are \fI/usr/src/{kernel/kernel,mm/mm,fs/fs}\fR.
+If the database is updated, an old psdatabase exists, and no paths are given to
+ps, it uses the paths that were previously stored in the database.  
+A \fIps \(enU\fR" in \fI/etc/rc\fR thus generally ensures an up-to-date 
+database.
+.PP
+The files \fI/dev/{mem,kmem}\fR are used to read the system tables and command
+line arguments from.  Terminal names in \fI/dev\fR are used to generate the 
+mnemonic names in the TTY column, so \fIps\fR is independent of terminal naming
+conventions.
+.PP
+Warning: \fIps\fR depends heavily on up-to-date system addresses and 
+parameters.
+It prints messages when they appear to be outdated.

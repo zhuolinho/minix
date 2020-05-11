@@ -1,0 +1,15 @@
+.CD "kermit \(en transfer a file using the kermit protocol"
+.SX "kermit"
+.FL "\fR(many)"
+.EY "kermit" "Start kermit"
+.PP
+\fIKermit\fR is a file transfer program, remote connection program, and
+much more.
+Even summarizing it here would be out of the question.
+For a description of it, see the 379 page book 
+\fIKermit: A File Transfer Protocol\fR
+by Frank da Cruz, Digital Press, 1987, ISBN 0-932376-88-6, and also
+Chap. 9.
+
+
+

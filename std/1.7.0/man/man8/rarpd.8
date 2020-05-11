@@ -1,0 +1,52 @@
+.TH RARPD 8
+.SH NAME
+rarpd \- reverse address resolution protocol daemon
+.SH SYNOPSIS
+.B rarpd
+.RB [ \-d ]
+.SH DESCRIPTION
+.B Rarpd
+listens on the ethernet for broadcast packets asking for reverse address
+resolution.  These packets are sent by hosts at boot time to find out their
+IP address.
+.B Rarpd
+looks up the six octet ethernet number in the
+.B /etc/ethers
+file finding a host name.  This name is translated to the IP address of the
+host by a DNS lookup.  The IP address is then sent to the host.
+.PP
+The first thing
+.B rarpd
+does when started is to send an unsolicited RARP reply to the local host if
+it can be found in the
+.B /etc/hosts
+file.  This way the host gets to know its IP address at boot time even if
+no other RARP server is present.  Note that the hostname must be found in
+the hosts file by an exact match.  The DNS is not yet running, so it can't
+translate a simple name to a fully qualified name.
+.PP
+.B Warning!
+Sun diskless workstations assume that the first RARP server that answers is
+the host they are to boot from.  For this to work all other Sun RARP servers
+delay their answer if they are not also the requestors boot server.  The
+Minix
+.B rarpd
+does not have this kludge so it will happily engage the Sun boot server to
+see who can answer the client first.  Unless your Minix host can actually
+serve a Sun diskless client, it is better not to list any more hosts in the
+ethers file than necessary.
+.SH OPTIONS
+.TP
+.B \-d
+Turns on debugging messages.
+.SH "SEE ALSO"
+.BR ifconfig (8),
+.BR ethers (5),
+.BR hosts (5),
+.BR set_net_default (8),
+.BR boot (8),
+.BR inetd (8),
+.BR irdpd (8),
+.BR nonamed (8).
+.SH AUTHOR
+Kees J. Bot (kjb@cs.vu.nl)

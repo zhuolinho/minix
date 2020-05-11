@@ -1,0 +1,21 @@
+.CD "fix \(en generate new file from old one and diff listing"
+.SX "fix \fIoldfile \fIdifflist \fI>newfile"
+.FL "\fR(none)"
+.EY "fix old difflist >new" "Generate new from old and diffs"
+.PP
+\fIFix\fR accepts a diff listing produced by diff and reconstructs the
+new file.  It is common for people to take a file, modify it, and then
+send the diff listing between the old and new files to other people.
+Using \fIfix\fR, the old file, and the diff listing, it is possible to creat
+the new file.  For example:
+.HS
+  diff oldfile newfile >difflist
+  fix oldfile difflist >new2
+.HS
+will generate a file \fInew2\fR that is identical to \fInewfile\fR.
+A more sophisticated alternative to \fIfix\fR is \fIpatch\fR,
+as \fIfix\fR only handles old-style diffs.
+
+
+
+.SP 1

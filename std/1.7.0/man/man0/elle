@@ -1,0 +1,12 @@
+.CD "elle \(en ELLE Looks Like Emacs"
+.SX "elle \fIfile\fR [\fIfile2\fR]"
+.FL "\fR(none)"
+.EY "elle file.c" "Start the editor"
+.PP
+\fIElle\fR is a screen-oriented editor that is patterned after Emacs.
+It can edit multiple files, regardless of their length, 
+can support 1 or 2 windows, and has many other powerful features.
+An \fIelle\fR manual is given in Chap. 9.
+
+
+

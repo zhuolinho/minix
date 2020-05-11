@@ -1,0 +1,36 @@
+.CD "patch \(en patches up a file from the original and a diff"
+.SX "patch\fR [\fB\(enNRbcdef\&lnop\fR]\fR [\fB\(enF\fIn\fR] [\fB\(enD \fIlabel\fR] [\fIfile \fR[\fIdifflist\fR]]"
+.FL "\(enD" "Mark changes with   #ifdef...#endif   next arg gives label"
+.FL "\(enF" "Sets the maximum fuzz factor to \fIn\fR"
+.FL "\(enN" "Ignore patches that are reversed or already applied"
+.FL "\(enR" "Reverse the patches"
+.FL "\(enb" "Next argument is backup extension, instead of using a tilde (\(ap)"
+.FL "\(enc" "Interpret the patch file as a context diff"
+.FL "\(end" "Cd to the next arg (assumed a dir) before doing anything"
+.FL "\(ene" "Interpret the patch file as an ed script"
+.FL "\(enf" "Forces \fIpatch\fR to do its work without asking any questions"
+.FL "\(enl" "Do matching loosely (e.g., all white space is equivalent)"
+.FL "\(enn" "Interpret the patch file as a normal diff"
+.FL "\(eno" "Next argument is the output file name"
+.FL "\(enp" "Sets the pathname strip count"
+.EX "patch file difflist" "Fix up \fIfile\fR"
+.EX "patch <difflist" "Patch multiple files"
+.PP
+\fIPatch\fR takes an original file and a diff listing and recreates the 
+new file.  It is functionally similar to 
+\fIfix\fR, but much more powerful.  Not only
+can it handle normal diffs, but also context diffs produced by \fIcdiff\fR.  In
+addition, it works even when the file being patched has other changes to it.
+It deduces the type of \fIdifflist\fR itself (unless 
+given \fB\(enc\fR, \fB\(ene\fR, or \fB\(enn\fR).
+The normal usage is given in the example above.  In this case \fIpatch\fR will
+modify \fIfile\fR to incorporate all the patches.  
+The original file will be saved to a file ending in a tilde (\(ap).
+.PP
+If no input file is given, \fIpatch\fR reads \fIstdin\fR which may contain
+the concatenation of multiple diff listings.
+In this way, all the files in a directory may be updated at once.
+See Chap. 9 for more information.
+
+
+

@@ -1,0 +1,12 @@
+.CD "tset \(en set the $TERM variable"
+.SX "tset\fR [\fIdevice\fR]"
+.FL "\fR(none)"
+.EY "eval \`tset\`" "Set TERM"
+.PP
+\fITset\fR is used almost exclusively to set the shell variable TERM from
+inside profiles.  If an argument is supplied, that is used as the value of
+TERM.  Otherwise it looks in \fI/etc/ttytype\fR.
+
+
+
+.SP 1.5

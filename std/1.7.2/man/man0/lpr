@@ -1,0 +1,19 @@
+.CD "lpr \(en copy a file to the line printer"
+.SX "lpr\fR [\fIfile\fR] ..."
+.FL "\fR(none)"
+.EX "lpr file &" "Print \fIfile\fP on the line printer"
+.EX "pr file | lpr &" "Print \fIstdin\fR (\fIpr\fR's output)"
+.PP
+Each argument is interpreted as a file to be printed.
+.I Lpr
+copies each file to 
+.I /dev/lp ,
+without spooling.
+It inserts carriage returns and expands tabs.
+Only one
+.I lpr
+at a time may be running.
+
+
+
+.SP 1

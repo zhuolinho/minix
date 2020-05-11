@@ -1,0 +1,38 @@
+.CD "sz \(en send a file using the zmodem protocol"
+.SX "sz\fR [\fB\(enLNbdefnopqruvy+\fR]\fR [\fB\(enci \fIcommand\fR] [\fB\(enLl\fR n\fR] [\fB\(ent \fItimeout\fR]
+.FL "\(enL" "Use \fIn\fR-byte packets"
+.FL "\(enN" "Overwrite if source is newer/longer"
+.FL "\(enb" "Binary file"
+.FL "\(enc" "Send command for execution"
+.FL "\(end" "Convert dot to slash in names"
+.FL "\(ene" "Escape for all control characters"
+.FL "\(enf" "Send full path name"
+.FL "\(eni" "Send command and return immediately"
+.FL "\(enl" "Flow control every \fIn\fR packets"
+.FL "\(enn" "Overwrite destination if source is newer"
+.FL "\(eno" "Use old (16-bit) checksum"
+.FL "\(enp" "Protect file if it already exists"
+.FL "\(enq" "Quiet; opposite of verbose"
+.FL "\(enr" "Resume interrupt file transfer"
+.FL "\(ent" "Set \fItimeout\fR in tenths of a second"
+.FL "\(enu" "Unlink file after successful transmission"
+.FL "\(env" "Verbose; opposite of quiet"
+.FL "\(eny" "Yes, clobber existing files"
+.FL "\(en+" "Append to an existing file"
+.EY "sz file </dev/tty1 >/dev/tty1" "Send \fIfile\fR"
+.PP
+XMODEM, YMODEM, and ZMODEM are a family of protocols that are widely used
+is the \s-2MS-DOS\s0 world for transferring information reliably from one
+computer to another.  In all of these protocols, a series of bytes are sent
+from one computer to the other, and then an acknowledgement is sent back
+to confirm correct reception.  Checksums are used to detect errors so that
+transmission is reliable even in the face of noisy telephone lines.
+\fISz\fR is a program that sends a file sent from another computer using the
+zmodem protocol.
+The file can be received using \fIrz\fR.
+Both are a highly complex programs.
+See Chap. 9 for more information.
+For an alternative, see \fIkermit\fR.
+
+
+

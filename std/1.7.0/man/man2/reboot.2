@@ -1,0 +1,32 @@
+.TH REBOOT 2
+.SH NAME
+reboot \- close down the system or reboot
+.SH SYNTAX
+.ft B
+.nf
+int reboot(int \fIflag\fP)
+.fi
+.ft P
+.SH DESCRIPTION
+.B Reboot()
+is used to close down the system.  It currently allows two ways of shutting
+down: a reboot (\fIflag\fP is 1) or a halt (\fIflag\fP is 0).  The procedure
+eliminates all the running processes and then sync's the disks and marks all
+mounted file systems as being clean.  After this the required action
+indicated by
+.I flag
+is taken.
+.PP
+.B Reboot()
+may only be executed by the super-user.
+.SH DIAGNOSTICS
+If the call succeeds, it never returns.  If something went wrong,
+the return value is -1 and an error is indicated by
+.BR errno .
+.SH SEE ALSO
+.BR shutdown (8),
+.BR reboot (8),
+.BR halt (8),
+.BR sync (1).
+.SH AUTHOR
+Edvard Tuinder (v892231@si.hhs.NL)

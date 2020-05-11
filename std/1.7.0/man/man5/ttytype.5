@@ -1,0 +1,44 @@
+.TH TTYTYPE 5
+.SH NAME
+ttytype \- table of terminal types
+.SH SYNOPSIS
+.B /etc/ttytype
+.SH DESCRIPTION
+The environment variable
+.B TERM
+tells the type of terminal a process is connected to.  The file
+.B /etc/ttytype
+lists the types of the terminal devices.  It is a simple text file
+containing lines of two words:
+.PP
+.RS
+.I "type	device"
+.RE
+.PP
+Where
+.I type
+is one of the names of the terminal descriptions in
+.B /etc/termcap
+and
+.B device
+is the name of a terminal device as found in
+.BR /dev .
+.PP
+The
+.B TERM
+variable is initialized from this file by
+.BR login .
+.SH ENVIRONMENT
+.TP 15n
+.B TERM
+Terminal type
+.SH NOTES
+It is customary to set the type to
+.B dialup
+for a dialin line.  One can check for that name in one's
+.BR .profile .
+.SH "SEE ALSO"
+.BR ttys (5),
+.BR login (8).
+.SH AUTHOR
+Kees J. Bot (kjb@cs.vu.nl)

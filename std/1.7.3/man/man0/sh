@@ -1,0 +1,157 @@
+.CD "sh \(en shell"
+.SX "sh\fR [\fB\(eneiknqstvxu\fR] [\fB\(enc \fIstr\fR] \fB[\fIfile\fR]"
+.FL "\(enc" "Execute the commands in \fIstr\fR"
+.FL "\(ene" "Quit on error"
+.FL "\(eni" "Interactive mode; ignore QUIT, TERMINATE, INTERRUPT"
+.FL "\(enk" "Look for name=value everywhere on command line"
+.FL "\(enn" "Do not execute commands"
+.FL "\(enq" "Change qflag from sig_ign to sig_del"
+.FL "\(ens" "Read commands from standard input"
+.FL "\(ent" "Exit after reading and executing one command"
+.FL "\(env" "Echo input lines as they are read"
+.FL "\(enx" "Trace"
+.FL "\(enu" "Unset variables"
+.EY "sh script" "Run a shell script"
+.PP
+.I Sh
+is the shell, which forms the user's main interface with the system.
+On startup, the shell reads /etc/profile and $HOME/.profile, if they exist,
+and executes any commands they contain.  The Minix shell has most of the
+features of the V7 (Bourne) shell, including redirection of input and output,
+pipes, magic characters, background processes, and shell scripts.  A brief
+summary follows, but whole books have been written on shell programming alone.
+.LP
+Some of the more common notations are:
+.nf
+.ta 2i 2.5i 3i
+.HS
+.in +0.25i
+date	# Regular command
+sort <file	# Redirect \fIstdin\fR (standard input)
+sort <file1  >file2	# Redirect \fIstdin\fR and \fIstdout\fR
+cc file.c  2>error	# Redirect \fIstderr\fR
+a.out >f  2>&1	# Combine standard output and standard error
+sort <file1  >>file2	# Append output to \fIfile2\fR
+sort <file1  >file2 &	# Background job
+(ls \(enl; a.out) &	# Run two background commands sequentially
+sort <file | wc	# Two-process pipeline
+sort <f | uniq | wc	# Three-process pipeline
+ls \(enl *.c	# List all files ending in \fI.c\fR
+ls \(enl [\fIa-c\fR]*	# List all files beginning with \fIa\fR, \fIb\fR, or \fIc\fR
+ls \(enl ?	# List all one-character file names
+ls \\?	# List the file whose name is question mark
+ls \(fm???\(fm	# List the file whose name is three question marks
+v=/usr/ast	# Set shell variable \fIv\fR
+ls \(enl $v	# Use shell variable \fIv\fR
+PS1=\(fmHi! \(fm	# Change the primary prompt to \fIHi!\fR
+PS2=\(fmMore: \(fm	# Change the secondary prompt to \fIMore:\fR
+ls \(enl $HOME	# List the home directory
+echo $PATH	# Echo the search path
+echo $?	# Echo exit status of previous command in decimal
+echo $$	# Echo shell's pid in decimal
+echo $!	# Echo PID of last background process
+echo $#	# Echo number of parameters (shell script)
+echo $2	# Echo second parameter (shell script)
+echo "$2"	# Echo second parameter without expanding spaces
+echo $*	# Echo all parameters (shell script)
+echo $@	# Echo all parameters (shell script)
+echo "$@"	# Echo all parameters without expanding spaces
+.in -0.25i
+.fi
+.LP
+The shell uses the following variables for specific purposes:
+.HS
+.in +0.25i
+.nf
+SHELL	the path of the current shell
+HOME	the default value for the cd(1) command
+PATH	the directories to be searched to find commands
+IFS	the internal field separators for command strings
+PS1	the primary shell prompt
+PS2	the secondary shell prompt
+.in -0.25i
+.fi
+.LP
+There are various forms of substitution on the shell command line:
+.HS
+.in +0.25i
+.nf
+`...`	Command string between back-quotes is replaced by its output
+"..."	Permits variable substitution between quotes
+\&'...'	Inhibits variable substitution between quotes
+$VAR	Replaced by contents of variable VAR
+${VAR}	Delimits variable VAR from any following string
+.in -0.25i
+.fi
+.LP
+The expressions below depend on whether or not VAR has ever been set.
+If VAR has been set, they give:
+.HS
+.in +0.25i
+.nf
+${VAR-str} Replace expression by VAR, else by str
+${VAR=str} Replace expression by VAR, else by str and set VAR to str
+${VAR?str} Replace expression by VAR, else print str and exit shell
+${VAR+str} Replace expression by str, else by null string
+.in -0.25i
+.fi
+.LP
+If a colon is placed after VAR, the expressions depend on whether or not
+VAR is currently set and non-null.
+.LP
+The shell has a number of built-in commands:
+.HS
+.in +0.25i
+.nf
+:	return true status
+\&. fn	execute shell script fn on current path
+break [n]	break from a for, until or while loop; exit n levels
+continue [n]	continue a for, until or while loop; resume nth loop
+cd [dir]	change current working directory; move to $HOME
+eval cmd	rescan cmd, performing substitutions
+eval	rescan the current command line
+exec cmd	execute cmd without creating a new process
+exec <|>	with no command name, modify shell I/O
+exit [n]	exit a shell program, with exit value n
+export [var]	export var to shell's children; list exported variables
+pwd	print the name of the current working directory
+read var	read a line from stdin and assign to var
+readonly [var]	make var readonly; list readonly variables
+set -f	set shell flag (+f unsets flag)
+set str	set positional parameter to str
+set	show the current shell variables
+shift	reassign positional parameters (except ${0}) one left
+times	print accumulated user and system times for processes
+trap arg sigs	trap signals sigs and run arg on receipt
+trap	list trapped signals
+umask [n]	set the user file creation mask; show the current umask
+wait [n]	wait for process pid n; wait for all processes
+.in -0.25i
+.fi
+.LP
+The shell also contains a programming language, which has the following
+operators and flow control statements:
+.HS
+.in +0.25i
+.nf
+#	Comment         The rest of the line is ignored
+=	Assignment      Set a shell variable
+&&	Logical AND     Execute second command only if first succeeds
+||	Logical OR      Execute second command only if first fails
+(...)	Group           Execute enclosed commands before continuing
+
+for	For loop (for ... in ... do ... done)
+case	Case statement ((case ... ) ... ;; ... esac)
+esac	Case statement end
+while	While loop (while ... do ... done)
+do	Do/For/While loop start (do ... until ...)
+done	For/While loop end
+if	Conditional statement (if ... else ... elif ... fi)
+in	For loop selection
+then	Conditional statement start
+else	Conditional statement alternative
+elif	Conditional statement end
+until	Do loop end
+fi	Conditional statement end
+.in -0.25i
+.fi

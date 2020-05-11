@@ -1,0 +1,20 @@
+.CD "rz \(en receive a file using the zmodem protocol"
+.SX "rz\fR [\(en\fBabepqvy\fR]\fR [\fB\(ent \fItimeout\fR]
+.FL "\(ena" "CP/M to UNIX conventions"
+.FL "\(enb" "Binary file"
+.FL "\(ene" "Escape for all control characters"
+.FL "\(enp" "Protect file if it already exists"
+.FL "\(enq" "Quiet; opposite of verbose"
+.FL "\(ent" "Set \fItimeout\fR in tenths of a second"
+.FL "\(env" "Verbose; opposite of quiet"
+.FL "\(eny" "Yes, clobber existing files"
+.EX "rz </dev/tty1 >/dev/tty1" "Receive a file"
+.PP
+\fIRz\fR is a program that accepts a file sent from another computer using the
+zmodem protocol.
+It is a highly complex program.
+See Chap 9 for more details.
+
+
+
+.SP 1

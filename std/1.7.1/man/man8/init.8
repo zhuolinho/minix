@@ -1,0 +1,85 @@
+.TH INIT 8
+.SH NAME
+init \- grandparent of all processes
+.SH DESCRIPTION
+The first program started by Minix is
+.BR init .
+The actions performed by
+.B init
+can be summarized by this pseudo shell program:
+.RS
+.nf
+.if t .ft C
+
+# Reboot on SIGABRT (sent by the kernel on CRTL-ALT-DEL)
+trap reboot 6
+
+# Run the system initialization script.
+sh /etc/rc </dev/console >/dev/console 2>&1
+
+>/etc/utmp
+echo reboot >>/usr/adm/wtmp
+
+ttys=`cat /etc/ttys`
+
+# Reread /etc/ttys on a hangup signal.
+trap 'ttys=`cat /etc/ttys`' 1
+
+# Stop everything on a terminate.
+trap 'ttys=' 15
+
+while :; do
+	# Wait for a process to exit.
+	wait
+
+	# Record logout.
+	for tty in $ttys
+	do
+		if exited $tty
+		then
+			echo "logout $tty" >>/etc/utmp
+			echo "logout $tty" >>/usr/adm/wtmp
+		fi
+	done
+
+	# Start a new session.
+	for tty in $ttys
+	do
+		if idle $tty
+		then
+			stty ... <$tty
+			getty <$tty >$tty 2>&1 &
+		fi
+	done
+done
+
+.if t .ft R
+.fi
+.RE
+.B Init
+naturally has process ID 1, so
+.B kill \-1 1
+should be used to make
+.B init
+reload the
+.B /etc/ttys
+file after it has been edited.
+.PP
+The utmp and wtmp handling is not a dumb as this of course, but you get the
+picture.
+.SH FILES
+.TP 25n
+.B /etc/ttys
+List of terminals devices.
+.TP
+.B /etc/utmp
+List of currently logged in users.
+.TP
+.B /usr/adm/wtmp
+Login/logout history.
+.SH "SEE ALSO"
+.BR ttys (5),
+.BR utmp (5),
+.BR boot (8).
+.SH AUTHOR
+Kees J. Bot (kjb@cs.vu.nl)

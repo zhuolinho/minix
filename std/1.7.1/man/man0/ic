@@ -1,0 +1,20 @@
+.CD "ic \(en integer calculator"
+.SX "ic\fR [\fIexpression\fR]"
+.FL "\fR(none)"
+.EX "ic~~~~" "Start the calculator"
+.EX "ic 250 300+" "Start calculator with 550 on the stack"
+.PP
+\fIIc\fR is a reverse Polish notation calculator that works on 32-bit integers.
+It starts out by computing the expression given as an argument, if any, and
+then expects keyboard input.  As an example, to compute \*(OQ23+5\*(CQ one 
+first converts this to reverse Polish, \*(OQ23 5+\*(CQ. 
+After the calculator starts, type \*(OQ23\*(CQ followed by a carriage return.
+Then type \*(OQ5\*(CQ and another carriage return.
+Finally type \*(OQ+\*(CQ to see the result, 28 displayed on the stack.
+Other operations work the same way.  The calculator can use other radices for
+input and output, and has registers that can be stored and loaded.  The \fIh\fR
+command gives the help menu.  See also Chap. 9.
+
+
+
+.SP 0.4

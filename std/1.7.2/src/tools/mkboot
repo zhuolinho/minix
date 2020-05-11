@@ -1,0 +1,111 @@
+#!/bin/sh
+#
+#	mkboot - make boot floppy, make root device bootable, etc.
+#							Author: Kees J. Bot
+
+trap 'e=$?; rm -f /tmp/mkb.$$; exit $e' 0 2
+
+mdec=/usr/mdec	# bootstraps
+
+# Check arguments.
+case "$#:$1" in
+1:bootable | 1:hdinstall | 1:hdtest | [12]:fdboot)
+	action=$1 dev=$2
+	;;
+*)	echo "Usage: $0 [bootable | hdinstall | hdtest | fdboot [device]]" >&2
+	exit 1
+esac
+
+# Get the device table.
+. /etc/fstab
+
+# The real root device may be the RAM disk.
+realroot=`printroot -r`
+
+case $action in
+bootable | hdinstall)
+	# We need the root device.
+	if [ $realroot = $root ]
+	then
+		rootdir=
+	else
+		umount $root 2>/dev/null
+		mount $root /root || exit
+		rootdir=/root
+	fi
+esac
+
+case $action in
+bootable)
+	# Install the boot monitor on the root device and make it bootable.
+	install -cs -m 644 $mdec/boot $rootdir/boot || exit
+	sync
+	installboot -device $root $mdec/bootblock /boot || exit
+	;;
+hdinstall)
+	# Install a new image on the root device.
+	if [ -d $rootdir/minix ]
+	then
+		# /minix is a directory containing images.
+		target=minix/`uname -r`.`uname -v`
+	else
+		# /minix is the image.
+		target=minix
+	fi
+	if [ $rootdir/$target -newer image ]
+	then
+		echo "$root:/$target is up to date"
+	else
+		install -c image $rootdir/$target || exit
+		echo "New $root:/$target installed."
+	fi
+	;;
+hdtest | fdboot)
+	# hdtest: Turn the hard disk scratch device into a boot disk for
+	#	  testing.
+	# fdboot: Make a boot floppy.
+
+	if [ $action = hdtest ]
+	then
+		dev=$tmp
+	elif [ -z "$dev" ]
+	then
+		echo -n \
+"Finish the name of the floppy device to write (by default 'fd0'): /dev/";
+		read dev
+		case "$dev" in
+		'')	dev=/dev/fd0
+			;;
+		/dev/*)
+			;;
+		*)	dev=/dev/$dev
+		esac
+	fi
+
+	# Make a file system.
+	umount $dev 2>/dev/null
+	mkfs -i 512 $dev || exit
+
+	# Install /dev, /boot and /minix.
+	mount $dev /mnt || exit
+	cpdir /dev /mnt/dev || exit
+	cp -p $mdec/boot /mnt/boot || exit
+	cp -p image /mnt/minix || exit
+	umount $dev || exit
+
+	# Make bootable and copy the boot parameters.
+	installboot -d $dev $mdec/bootblock boot || exit
+	dd if=$root of=$dev skip=1 seek=1 count=1 conv=silent || exit
+	edparams $dev 'main(){delay 2000;boot}; save' || exit
+	echo "Test kernel installed on $dev with boot parameters from $root"
+esac
+
+case $action in
+bootable | hdinstall)
+	# Unmount the root device.
+	if [ $realroot != $root ]
+	then
+		umount $root
+	fi
+esac
+: exit 0

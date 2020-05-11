@@ -1,0 +1,30 @@
+.CD "aoutdump \(en display the contents of an object file"
+.SX "aoutdump \fR[\fIfile\fR [\fIabcdef\fR] ]"
+.FL "\fR(none)"
+.EY "aoutdump test.o 000010" "dump the symbol table records of \fItest.o\fR"
+.PP
+.I Aoutdump
+gives a complete dump of each ACK formatted object
+.I file
+in the argument list.
+If no
+.I file
+is given, \fIa.out\fR is displayed.
+The parameter following the file name is a bit map that
+can be used to specify a partial dump.
+Each bit must be 0 or 1.
+The 6 bits in the map have the following meanings:
+.HS
+.ta 0.25i 0.50i
+.nf
+	\fIa\fR	Display the header record
+	\fIb\fR	Display the section records
+	\fIc\fR	Display the code bytes
+	\fId\fR	Display the relocation records
+	\fIe\fR	Display the symbol table records
+	\fIf\fR	Display the string area
+.fi
+
+
+
+.SP 1.5

@@ -1,0 +1,22 @@
+.CD "vol \(en split stdin into diskette-sized volumes"
+.SX "vol\fR [\fB\(enrw\fR] [\fIsize\fR] \fIblock_special"
+.FL "\(enu" "Unsave from diskettes"
+.EX "tar cf \(en . | vol \(enw 360 /dev/fd0" "Prompt for disk every 360K"
+.EX "vol \(enr 360 /dev/fd0 | tar xf \(en " "Restore a saved file system"
+.PP
+It occasionally happens that a program generates an output stream intended
+for diskette but the stream is to large to fit on one diskette.  \fIVol\fP is a
+program that accepts such a stream, and pauses every \fIsize\fR 
+blocks to request a new diskette to be inserted.  
+This makes it possible to save arbitrarily long
+streams on a series of diskettes, as shown in the examples above.
+.PP
+You do not have to use the \fB\(enr\fP or \fB\(enw\fP options if you use
+\fIvol\fP on the command line, it will figure out by itself what the
+direction of the data is.  The size of the device also need not be
+specified if you know that the device is large enough, like a tape.
+\fIVol\fP is then useful for the buffering it does, because \fItar\fP
+doesn't buffer.
+
+
+

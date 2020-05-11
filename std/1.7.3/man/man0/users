@@ -1,0 +1,10 @@
+.CD "users \(en list the logged-in users"
+.SX "users"
+.FL "\fR(none)"
+.EY "users" "list the users"
+.PP
+\fIUsers\fR prints one line containing the names of all 
+the currently logged-in users.
+
+
+

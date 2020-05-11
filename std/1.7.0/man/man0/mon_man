@@ -1,0 +1,124 @@
+   5  K    4034: 10 Dec 92 Kees J. Bot     Little monitor document
+(Message # 5: 4034 bytes, KEEP)
+Received: from spanker.cs.vu.nl by top.cs.vu.nl id aa00984; 10 Dec 92 9:49 MET
+Received: from hornet.cs.vu.nl by spanker.cs.vu.nl id aa00324;
+          10 Dec 92 9:49 MET
+Date:     Thu, 10 Dec 92 9:49:24 MET
+From:     "Kees J. Bot" <kjb@cs.vu.nl>
+To:       ast@cs.vu.nl
+Subject:  Little monitor document
+Message-ID:  <9212100949.aa16951@hornet.cs.vu.nl>
+
+I've written a small document on the monitor as you requested.  Below is
+a shar file with the nroff source.  The command
+
+	nroff -ms mon.doc.ms | colcrt - > mon.doc
+
+will turn it into a flat file.  Only the page breaks are left to be
+removed.
+
+(I should be less vocal on the net, now someone sent his Minix questions
+to me, but the praise still goes to you: "Tell Andy he did a superb job
+putting this OS together."  Just passing it on. :-)
+--
+								Kees.
+_._. .._ _   ._ ._.. ___ _. __.   _ .... .   _.. ___ _ _ . _..   ._.. .. _. .
+: This is a shar archive.  Extract with sh, not csh.
+: This archive ends with exit, so do not worry about trailing junk.
+: --------------------------- cut here --------------------------
+PATH=/bin:/usr/bin:/usr/ucb
+echo Extracting 'mon.doc.ms'
+sed 's/^X//' > 'mon.doc.ms' << '+ END-OF-FILE ''mon.doc.ms'
+X.SH
+XDoing more with the Minix Boot Monitor.
+X.PP
+XThis text describes the menu interface of the Minix Boot Monitor, and
+Xthe commands that may be used to customize it.
+X.LP
+XFirst of all, the monitor mode as distributed normally hides some of the
+Xfunctionality, but shows you an explanation of the environment
+Xvariables instead.  If you add -DEXTENDED_LIST to CFLAGS in the Makefile
+Xand recompile, then you will no longer see the long explanation (you
+Xshould know it by now), but you will see all the commands the monitor
+Xknows about.
+X.SH
+XThe commands.
+X.PP
+XThe boot command has two functions, one is to load and start Minix, the
+Xother is to boot a different operating system.  If the first partition
+Xon your hard disk contains MS-DOS, then
+X.DS
+X.B
+Xboot hd1
+X.R
+X.DE
+Xwill boot MS-DOS.  (Not all operating systems like to be called this
+Xway, some insist on being on the active partition.)
+X.LP
+XThe delay, ls, and other simple commands are not too difficult to
+Xunderstand, just try them out.  The trap command may be used to execute
+Xa function after a delay.  You can show a menu first and boot Minix
+Xafter 5 seconds of inactivity like this:
+X.DS
+X.B
+Xtrap 5000 boot; menu
+X.R
+X.DE
+X(This must be typed on one line, traps are cancelled when the prompt is
+Xprinted.)
+X.SH
+XFunctions.
+X.PP
+XFunctions are used to bundle commands, or to build menu items.  The best
+Xexample of a simple function is 'main', the function executed by the
+Xmonitor on startup.  Main is by default defined as:
+X.DS
+X.B
+Xmain() { menu }
+X.R
+X.DE
+XSo that's why you see a menu at the start.  The example with 'trap'
+Xabove could be executed by main if you type:
+X.DS
+X.B
+Xmain() { trap 5000 boot; menu }
+Xsave
+X.R
+X.DE
+XThe save command will save the changed environment of the monitor to the
+Xsecond half of the boot block, the "boot parameters sector".
+X.LP
+XFunctions may have one or two arguments, the first is a key to be
+Xpressed from the menu to execute the function, the optional second
+Xargument is the text that is to be displayed on the menu.  The single
+Xargument functions should only be produced by construct, like this
+Xone:
+X.DS
+X.B
+XAT(a) {label=AT;image=42:626;echo AT kernel selected;menu}
+X.R
+X.DE
+XIt invites you to choose one of many kernels on a special boot floppy.
+X.LP
+XThe two argument functions are used to customize the menu, once you
+Xdefine one the default option disappears, so your first function will
+Xprobably be one to start Minix.  Example:
+X.DS
+X.B
+Xminix(=,Start Minix) { boot }
+Xdos(d,Boot MS-DOS) { boot hd1 }
+Xsave
+Xmenu
+X.R
+X.DE
+XNow you can type '=' or 'd' to choose between Minix and DOS.
++ END-OF-FILE mon.doc.ms
+chmod 'u=rw,g=r,o=r' 'mon.doc.ms'
+set `wc -c 'mon.doc.ms'`
+count=$1
+case $count in
+2542)	:;;
+*)	echo 'Bad character count in ''mon.doc.ms' >&2
+		echo 'Count should be 2542' >&2
+esac
+exit 0

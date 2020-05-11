@@ -1,0 +1,15 @@
+.CD "dis88 \(en disassembler [IBM]"
+.SX "dis88\fR [\fB\(eno\fR] \fIinfile\fR [\fIoutfile\fR]"
+.FL "\(eno" "List the object code along with the assembly code"
+.EX "dis88 a.out >listing" "Disassemble \fIa.out\fR"
+.EX "dis88 \(eno a.out listing" "Ditto, but with object code"
+.PP
+\fIDis88\fR is an 8088 disassembler.  
+It takes an executable file and prints the
+symbolic assembly code that corresponds to it.  If the executable file contains
+a symbol table (added by the program \fIast\fR), the symbol table 
+information is used to give a more readable asembly listing.
+More information is provided in Chap. 9.
+
+
+
